@@ -1,0 +1,12 @@
+{
+  "ID":"33D2C23B084D411DB64FE0C59D6C7A4H",   
+  "ActionKeyword":"cc",                     
+  "Name":"Currency Converter",                             
+  "Description":"Convert Currency",   
+  "Author":"Glassound",                    
+  "Version":"1.0.0",                        
+  "Language":"python",                  
+  "Website":"http://www.getwox.com",        
+  "IcoPath": "Images\\plugin.png",              
+  "ExecuteFileName":"cc.py" 
+}
