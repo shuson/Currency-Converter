@@ -1,4 +1,4 @@
-# Currency-Converter
+# Currency Converter
 
 A plugin for Wox that Converts currency
 
