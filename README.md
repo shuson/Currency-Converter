@@ -1,6 +1,6 @@
 # Currency Converter
 
-A plugin for Wox that Converts currency
+A plugin for Wox that converts currency
 
 Query must be in this format: cc (amount) (original currency) (new currency)
 
