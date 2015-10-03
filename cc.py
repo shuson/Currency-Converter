@@ -1,7 +1,13 @@
 import requests
 from wox import Wox,WoxAPI
+import clipboard
+from os.path import dirname, join
+import pycountry
+
 a=""
+
 class Main(Wox):
+	icon = join(dirname(__file__), 'Images', 'plugin.png')
 	def query(self,query):
 		results=[]
 		args = query.split(' ')
@@ -12,9 +18,8 @@ class Main(Wox):
 			try:
 				a=float(a)
 				b=float(args[0])*a
-				
 				c=args[2]
-				c=c.upper()
+
 				pass
 			except Exception, e:
 				b="Invalid amount"
@@ -22,13 +27,19 @@ class Main(Wox):
 				pass
 			finally:
 				pass
+
 			results=[]
-			if b>0:
-				str(b)
+			if b>0 and b!="Invalid amount":
+				c=c.upper()
+				c=pycountry.currencies.get(letter=c)
+				x=str(c.name)
+				b="{0:.2f}".format(b)
+				b=str(b)
 				results.append({
-   					"Title": b,
-    				"SubTitle":c.upper(),
-    				"IcoPath":"Images/plugin.png"
+   					"Title": b+" "+x+"s",
+    				"SubTitle":"Copy to clipboard",
+    				"IcoPath":"Images/plugin.png",
+    				"JsonRPCAction":{'method': 'copy', 'parameters': [b],'dontHideAfterAction': False}
 				})
 				return results
 				
@@ -48,6 +59,13 @@ class Main(Wox):
     			"IcoPath":"Images/plugin.png"
 				})
 				return results
+			if b=="Invalid amount":
+				results.append({
+   				"Title": "Invalid amount",
+    			"SubTitle":"Enter a number",
+    			"IcoPath":"Images/plugin.png"
+				})
+				return results
 		else:
 			results=[]
 			results.append({
@@ -56,6 +74,10 @@ class Main(Wox):
         		"IcoPath":"Images/plugin.png"
         	})
     		return results		
+   
+	def copy(self, data):
+		clipboard.put(data)
+		WoxAPI.show_msg("Value has been copied to clipboard.", '', self.icon)
 
 if __name__ == "__main__":
 	Main()
