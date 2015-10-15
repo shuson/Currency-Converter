@@ -24,7 +24,6 @@ class Main(Wox):
 				a=float(a)
 				b=float(args[0])*a
 				c=args[2]
-
 				pass
 			except Exception, e:
 				b="Invalid amount"
@@ -32,7 +31,6 @@ class Main(Wox):
 				pass
 			finally:
 				pass
-
 			results=[]
 			if b>0.000001 and b!="Invalid amount":
 				c=c.upper()
