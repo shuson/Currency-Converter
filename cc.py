@@ -3,6 +3,8 @@ from wox import Wox,WoxAPI
 import clipboard
 from os.path import dirname, join
 import pycountry
+from bs4 import BeautifulSoup
+import re
 
 a=""
 
@@ -12,9 +14,12 @@ class Main(Wox):
 		results=[]
 		args = query.split(' ')
 		if len(args)==3 and len(args[1])==3 and len(args[2])==3:
-			url = ('https://currency-api.appspot.com/api/%s/%s.json') % (args[1], args[2])
+			url = ('http://www.xe.com/currencyconverter/convert/?Amount=1&From=%s&To=%s') % (args[1], args[2])
 			r = requests.get(url)
-			a = r.json()['rate']
+			soup = BeautifulSoup(r.text, "html.parser")
+			data = soup.find('td', attrs={'class':'rightCol'})
+			m=re.findall(r'[\w.]+',data.text)
+			a=m[0]
 			try:
 				a=float(a)
 				b=float(args[0])*a
@@ -29,7 +34,7 @@ class Main(Wox):
 				pass
 
 			results=[]
-			if b>0 and b!="Invalid amount":
+			if b>0.000001 and b!="Invalid amount":
 				c=c.upper()
 				c=pycountry.currencies.get(letter=c)
 				x=str(c.name)
