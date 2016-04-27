@@ -10,12 +10,17 @@ a=""
 
 class Main(Wox):
 	icon = join(dirname(__file__), 'Images', 'plugin.png')
+	def request(self,url):
+		#f*k off auto extraction prohibited error
+		headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64)'}
+		return requests.get(url, headers=headers)
+	
 	def query(self,query):
 		results=[]
 		args = query.split(' ')
 		if len(args)==3 and len(args[1])==3 and len(args[2])==3:
 			url = ('http://www.xe.com/currencyconverter/convert/?Amount=1&From=%s&To=%s') % (args[1], args[2])
-			r = requests.get(url)
+			r = self.request(url)
 			soup = BeautifulSoup(r.text, "html.parser")
 			data = soup.find('td', attrs={'class':'rightCol'})
 			m=re.findall(r'[\w.]+',data.text)
