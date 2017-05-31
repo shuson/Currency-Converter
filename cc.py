@@ -22,7 +22,7 @@ class Main(Wox):
 			url = ('http://www.xe.com/currencyconverter/convert/?Amount=1&From=%s&To=%s') % (args[1], args[2])
 			r = self.request(url)
 			soup = BeautifulSoup(r.text, "html.parser")
-			data = soup.find('td', attrs={'class':'rightCol'})
+			data = soup.find('span', attrs={'class':'uccResultAmount'})
 			m=re.findall(r'[\w.]+',data.text)
 			a=m[0]
 			try:
